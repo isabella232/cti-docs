@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>CTI Onboarding Docs</title>
- <link href="/atom.xml" rel="self"/>
- <link href="/"/>
- <updated>2021-12-21T13:30:14-05:00</updated>
- <id></id>
+ <link href="https://ecezalp.github.io/cti-docs-demo//atom.xml" rel="self"/>
+ <link href="https://ecezalp.github.io/cti-docs-demo//"/>
+ <updated>2021-12-21T13:49:04-05:00</updated>
+ <id>https://ecezalp.github.io/cti-docs-demo/</id>
  <author>
    <name></name>
    <email></email>

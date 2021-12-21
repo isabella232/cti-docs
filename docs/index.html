@@ -55,12 +55,12 @@ backend
 ├── <a href="#ecs-threat-fields">ECS threat.* fields</a>
 │   ├── about
 │   └── default_threat_index UI setting
-├── <a href="#indicator-match-rule-preview">Indicator match rule preview</a>
-├── <a href="#prebuilt-indicator-match-rules">prebuilt indicator match rules</a>
+├── <a href="#indicator-match-rule-preview">Indicator Match Rule Preview</a>
+├── <a href="#prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</a>
 │   ├── filebeat 7.x rule
 │   ├── filebeat 8.x rule
 │   └── Fleet integrations rule
-└── <a href="#detection-engine-key-concepts">detection engine: key concepts</a>
+└── <a href="#detection-engine-key-concepts">Detection Engine: Key Concepts</a>
 
 frontend
 ├── <a href="#indicator-match-rule">Indicator Match Rule</a>
@@ -77,6 +77,39 @@ frontend
 │   ├── Filebeat threat intel dashboards
 │   └── Fleet threat intel dashboards
 └── <a href="#indicator-match-rule">Host Risk Score Card</a>
+
+setup
+├── <a href="#indicator-match-rule">Setting up filebeat threatintel integrations</a>
+├── <a href="#indicator-match-rule">Setting up Fleet threat Integrations</a>
+└── <a href="#indicator-match-rule">Setting up Host Risk Scoring</a>
+
+general setup
+├── <a href="#indicator-match-rule">Setting up ES and kibana</a>
+│   └── security solution scripts
+├── <a href="#indicator-match-rule">Running Security Solution API Integration tests</a>
+├── <a href="#indicator-match-rule">Running Security Solution jest tests</a>
+└── <a href="#indicator-match-rule">Running Security Solution cypress tests</a>
+
+performance
+├── <a href="#indicator-match-rule">Performance Benchmarking with kbn-alert-load</a>
+├── <a href="#indicator-match-rule">Rule Execution Timeline with APM</a>
+├── <a href="#indicator-match-rule">Indicator Match Rule SDH troubleshooting guide</a>
+├── <a href="#indicator-match-rule">Previous SDHs related to Indicator Match Rules</a>
+└── <a href="#indicator-match-rule">Performance Epic</a>
+
+manual regression suites
+├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
+├── <a href="#indicator-match-rule">Create an investigation time enrichment</a>
+├── <a href="#indicator-match-rule">Populate the CTI card</a>
+├── <a href="#indicator-match-rule">Populate the Host Risk Score card</a>
+├── <a href="#indicator-match-rule">View CTI dashboards</a>
+├── <a href="#indicator-match-rule">View Host Risk Score dashboards</a>
+├── <a href="#indicator-match-rule">View the CTI row renderer</a>
+└── <a href="#indicator-match-rule">Use the CTI timeline template</a>
+
+team
+├── <a href="#indicator-match-rule">Contributors</a>
+└── <a href="#indicator-match-rule">CTI sync / CTI area sync agenda documents & recordings</a>
             </pre>
         </nav>
     </div>
@@ -85,7 +118,7 @@ frontend
     <div class="home"><div class="documents">
   
   <h1 id="backend">backend</h1>
-<h2 id="indicator-match-rule">Indicator match rule</h2>
+<h2 id="indicator-match-rule">Indicator Match Rule</h2>
 <h3 id="about">about</h3>
 <p>Indicator Match Rule is one of the detection rule types offered by Elastic. The general purpose of an indicator match rule is to create alerts when signatures of known threats are found within a subset of events. Indicator Match Rules can be used across clusters with caution. Threat matching is an expensive operation and cluster performance degradations have been associated with indicator match rules in the past. Threat documents can be ingested from third party intelligence sources with package integrations through fleet, filebeat threatintel modules, or other custom integrations.</p>
 
@@ -104,7 +137,7 @@ frontend
 <h4 id="percolator-82">percolator (8.2+)</h4>
 <p>Percolator queries have been suggested for performance improvements as the boolean filter implementation could create extremely large queries that users have complained about in SDHs.</p>
 
-<h2 id="investigation-time-enrichments">investigation time enrichments</h2>
+<h2 id="investigation-time-enrichments">Investigation Time Enrichments</h2>
 <h3 id="about-1">about</h3>
 <p>Investigation time enrichments is the result of a threat matching strategy that is independent from the alerting framework and rule execution. Investigation time enrichments are created while an analyst is looking through the details of an existing alert that may have been created by any rule (not just indicator match rule). If the examined alert has any matching threats on a predefined list of fields, <code class="language-plaintext highlighter-rouge">threat.enrichments*</code> fields are accordingly placed on the UI along with the rest of the alert details. Investigation time enrichments are not persisted.</p>
 
@@ -142,7 +175,7 @@ frontend
   <li>investigation time enrichments value for calendar UI</li>
 </ul>
 
-<h2 id="indicator-match-rule-preview">Indicator match rule preview</h2>
+<h2 id="indicator-match-rule-preview">Indicator Match Rule Preview</h2>
 <h3 id="about-4">about</h3>
 <p>Indicator match rule preview feature is created to ensure that the indicator match rule that is desired to be created can be viewed through the preview UI as a part of the create rule flow define step. The most important part of the preview is to surface errors and warnings to the UI before the rule is created, so that if there are any issues with the rule configuration, the issues could be identified before the rule is actually created in production. In the future, warnings that are specific to indicator match rules (such as “too many events” or “too many indicators” to encourage the users to use the index query and threat query more effectively are considered.</p>
 
@@ -169,7 +202,7 @@ frontend
 <h3 id="performance-concerns">Performance concerns</h3>
 <p>Indicator match rules have been disabled at 8.0.0 as the single rule execution can take many seconds even with the most barebones implementation. There is no inherent mechanism to stop the rule execution if it starts taking a really long time, and it can clog up the system with no remediation strategy other than restarting the server if it starts hanging due to a huge query execution time. Given the circumstances the preview functionality has not been deemed production-ready at this time.</p>
 
-<h2 id="ecs-fields">ECS fields</h2>
+<h2 id="ecs-threat-fields">ECS threat.* fields</h2>
 <h3 id="about-5">about</h3>
 <p>ECS fields are used to standardize the data format of elastic search indice schemas so that we can build products with some proedictability. Normally they are used internally, but if a user wants to add a new threat index, or a new threat feed, for best purposes they should absolutely use the latest ECS at all times, and update their indices according to the latest specs every time there is a release update, to ensure that the features work properly and there is no random data missing.</p>
 
@@ -185,7 +218,7 @@ frontend
 <h3 id="threat_indicator_path">threat_indicator_path</h3>
 <p>thraet.indicator.path is the source path of the threat data, and it is used to override the default threat.indicator value during the enrichments process. This is especially useful as historically in filebeat 7* there were fields such as threatintel.indicator, which is the default value for then. We can easily override that, or any other place in any other index, with the threat indicator path. All threat data has to be in one place though, so even in a custom index, if there is file.hash.md5 under custom.test, and threat.indicator.path is custom.test, and there is file.hash.xyz under custom.test2, only the correct path one can be added onto the alert as the enrichment.</p>
 
-<h2 id="prebuilt-indicator-match-rules">prebuilt indicator match rules</h2>
+<h2 id="prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</h2>
 <h3 id="about-6">about</h3>
 <p>Prebuilt rules are built by the elastic protections team so that customers can start enabling it immediately and they can have an out of the box experience with threat intelligence in their platform. The rules are created with the latest information and the important techniques. Up until 7 there was only the filebeat rule, which have resulted in a lot of SDHs. In the 8 release we have opted to ship multiple rules so that they can be disabled at will if any of them start behaving badly.</p>
 
