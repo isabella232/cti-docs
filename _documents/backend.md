@@ -3,7 +3,7 @@ title: "backend"
 url: "/backend/"
 ---
 # backend
-## Indicator match rule
+## Indicator Match Rule
 ### about
 Indicator Match Rule is one of the detection rule types offered by Elastic. The general purpose of an indicator match rule is to create alerts when signatures of known threats are found within a subset of events. Indicator Match Rules can be used across clusters with caution. Threat matching is an expensive operation and cluster performance degradations have been associated with indicator match rules in the past. Threat documents can be ingested from third party intelligence sources with package integrations through fleet, filebeat threatintel modules, or other custom integrations.
 
@@ -22,7 +22,7 @@ The assumption that the customers have more indicator documents than events have
 #### percolator (8.2+)
 Percolator queries have been suggested for performance improvements as the boolean filter implementation could create extremely large queries that users have complained about in SDHs.
 
-## investigation time enrichments
+## Investigation Time Enrichments
 ### about
 Investigation time enrichments is the result of a threat matching strategy that is independent from the alerting framework and rule execution. Investigation time enrichments are created while an analyst is looking through the details of an existing alert that may have been created by any rule (not just indicator match rule). If the examined alert has any matching threats on a predefined list of fields, `threat.enrichments*` fields are accordingly placed on the UI along with the rest of the alert details. Investigation time enrichments are not persisted.
 
@@ -54,7 +54,7 @@ Default threat query has been created to ensure that indicator documents are nar
 - indicator match rule default value for threat_query
 - investigation time enrichments value for calendar UI
 
-## Indicator match rule preview
+## Indicator Match Rule Preview
 ### about
 Indicator match rule preview feature is created to ensure that the indicator match rule that is desired to be created can be viewed through the preview UI as a part of the create rule flow define step. The most important part of the preview is to surface errors and warnings to the UI before the rule is created, so that if there are any issues with the rule configuration, the issues could be identified before the rule is actually created in production. In the future, warnings that are specific to indicator match rules (such as “too many events” or “too many indicators” to encourage the users to use the index query and threat query more effectively are considered.
 
@@ -79,7 +79,7 @@ threat_indicator_path is default as discussed in the parameters sections, which 
 ### Performance concerns
 Indicator match rules have been disabled at 8.0.0 as the single rule execution can take many seconds even with the most barebones implementation. There is no inherent mechanism to stop the rule execution if it starts taking a really long time, and it can clog up the system with no remediation strategy other than restarting the server if it starts hanging due to a huge query execution time. Given the circumstances the preview functionality has not been deemed production-ready at this time.
 
-## ECS fields
+## ECS threat.* fields
 ### about
 ECS fields are used to standardize the data format of elastic search indice schemas so that we can build products with some proedictability. Normally they are used internally, but if a user wants to add a new threat index, or a new threat feed, for best purposes they should absolutely use the latest ECS at all times, and update their indices according to the latest specs every time there is a release update, to ensure that the features work properly and there is no random data missing.
 
@@ -95,7 +95,7 @@ threat.feed has some metadata around the feed, we use threat.feed.name and threa
 ### threat_indicator_path
 thraet.indicator.path is the source path of the threat data, and it is used to override the default threat.indicator value during the enrichments process. This is especially useful as historically in filebeat 7* there were fields such as threatintel.indicator, which is the default value for then. We can easily override that, or any other place in any other index, with the threat indicator path. All threat data has to be in one place though, so even in a custom index, if there is file.hash.md5 under custom.test, and threat.indicator.path is custom.test, and there is file.hash.xyz under custom.test2, only the correct path one can be added onto the alert as the enrichment.
 
-## prebuilt indicator match rules
+## Prebuilt Indicator Match Rules
 ### about
 Prebuilt rules are built by the elastic protections team so that customers can start enabling it immediately and they can have an out of the box experience with threat intelligence in their platform. The rules are created with the latest information and the important techniques. Up until 7 there was only the filebeat rule, which have resulted in a lot of SDHs. In the 8 release we have opted to ship multiple rules so that they can be disabled at will if any of them start behaving badly.
 
