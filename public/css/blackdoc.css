@@ -28,12 +28,12 @@ ______ _            _   ______
  */
 
 html {
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
 }
 
 body {
-  color: #848482;
-  background-color: #000000;
+  color: rgb(225,225,225);
+  background-color: rgb(18,18,18);
 }
 
 h1,
@@ -42,8 +42,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'EB Garamond', serif;
-  color: #aaa;
+  font-family: 'Inter', serif;
+  color: rgb(225,225,225);
 }
 
 h1 a,
@@ -52,7 +52,7 @@ h3 a,
 h4 a,
 h5 a,
 h6 a {
-  font-family: 'EB Garamond', serif;
+  font-family: 'Inter', serif;
   color: #50585d;
   font-kerning: auto;
   font-feature-settings: "kern", "liga", "dlig", "hlig", "cswh";
@@ -188,8 +188,8 @@ tbody tr:nth-child(odd) th {
 .sidebar {
   text-align: center;
   padding: 2rem 1rem;
-  color: rgba(255, 255, 255, .5);
-  background-color: #000;
+  color: rgb(225,225,225);
+  background-color: rgb(30,30,30);
   overflow: auto;
 }
 @media (min-width: 48em) {
@@ -198,8 +198,9 @@ tbody tr:nth-child(odd) th {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 18rem;
+    width: 22rem;
     text-align: left;
+    min-width: 500px;
   }
 }
 
@@ -261,14 +262,14 @@ a.sidebar-nav-item:focus {
 @media (min-width: 48em) {
   .content {
     max-width: 95%;
-    margin-left: 18rem;
+    margin-left: 550px;
     margin-right: 0rem;
   }
 }
 
 @media (min-width: 64em) {
   .content {
-    margin-left: 18rem;
+    margin-left: 550px;
     margin-right: 0rem;
   }
 }
