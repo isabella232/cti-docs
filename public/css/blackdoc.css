@@ -217,7 +217,7 @@ tbody tr:nth-child(odd) th {
     bottom: 0;
     width: 22rem;
     text-align: left;
-    min-width: 500px;
+    min-width: 600px;
   }
 }
 
@@ -279,14 +279,14 @@ a.sidebar-nav-item:focus {
 @media (min-width: 48em) {
   .content {
     max-width: 95%;
-    margin-left: 550px;
+    margin-left: 650px;
     margin-right: 0rem;
   }
 }
 
 @media (min-width: 64em) {
   .content {
-    margin-left: 550px;
+    margin-left: 650px;
     margin-right: 0rem;
   }
 }
