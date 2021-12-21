@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>
+        
+         &middot; CTI Onboarding Docs
+        
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="public/css/poole.css">
+    <link rel="stylesheet" href="public/css/syntax.css">
+    <link rel="stylesheet" href="public/css/blackdoc.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Inter">
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="public/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="public/security-logo-color.png">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+<body>
+<div class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="sidebar-about">
+            <h1>
+                <a class="home-link" href="">
+                    <img src="public/security-logo-color.png"/>
+                </a>
+            </h1>
+            <p class="lead"><span>Cyber Threat Intelligence</span> Onboarding Documentation</p>
+        </div>
+        <nav class="sidebar-nav">
+            <pre style="background:none;">
+backend
+├── <a href="#indicator-match-rule">Indicator Match Rule</a>
+│   ├── about
+│   ├── architecture
+│   └── executor
+│       ├── Boolean filter (v7.12+)
+│       ├── Reverse join (v8.1+)
+│       └── Percolator (v8.2+)
+├── <a href="#investigation-time-enrichments">Investigation Time Enrichments</a>
+│   ├── about
+│   ├── architecture
+│   └── available fields
+├── <a href="#ecs-threat-fields">ECS threat.* fields</a>
+│   ├── about
+│   └── default_threat_index UI setting
+├── <a href="#indicator-match-rule-preview">Indicator Match Rule Preview</a>
+├── <a href="#prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</a>
+│   ├── filebeat 7.x rule
+│   ├── filebeat 8.x rule
+│   └── Fleet integrations rule
+└── <a href="#detection-engine-key-concepts">Detection Engine: Key Concepts</a>
+
+frontend
+├── <a href="#indicator-match-rule">Indicator Match Rule</a>
+│   ├── Create UI
+│   ├── Edit UI
+│   └── Rule Details UI
+├── <a href="#indicator-match-rule">Alert Details Flyout</a>
+│   ├── CTI on Alert Summary Tab
+│   └── Threat Intel Tab
+├── <a href="#indicator-match-rule">Threat Intelligence Card</a>
+├── <a href="#indicator-match-rule">CTI Row Renderer</a>
+├── <a href="#indicator-match-rule">CTI Timeline template</a>
+├── <a href="#indicator-match-rule">CTI dashboards</a>
+│   ├── Filebeat threat intel dashboards
+│   └── Fleet threat intel dashboards
+└── <a href="#indicator-match-rule">Host Risk Score Card</a>
+
+setup
+├── <a href="#indicator-match-rule">Setting up filebeat threatintel integrations</a>
+├── <a href="#indicator-match-rule">Setting up Fleet threat Integrations</a>
+└── <a href="#indicator-match-rule">Setting up Host Risk Scoring</a>
+
+general setup
+├── <a href="#indicator-match-rule">Setting up ES and kibana</a>
+│   └── security solution scripts
+├── <a href="#indicator-match-rule">Running Security Solution API Integration tests</a>
+├── <a href="#indicator-match-rule">Running Security Solution jest tests</a>
+└── <a href="#indicator-match-rule">Running Security Solution cypress tests</a>
+
+performance
+├── <a href="#indicator-match-rule">Performance Benchmarking with kbn-alert-load</a>
+├── <a href="#indicator-match-rule">Rule Execution Timeline with APM</a>
+├── <a href="#indicator-match-rule">Indicator Match Rule SDH troubleshooting guide</a>
+├── <a href="#indicator-match-rule">Previous SDHs related to Indicator Match Rules</a>
+└── <a href="#indicator-match-rule">Performance Epic</a>
+
+manual regression suites
+├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
+├── <a href="#indicator-match-rule">Create an investigation time enrichment</a>
+├── <a href="#indicator-match-rule">Populate the CTI card</a>
+├── <a href="#indicator-match-rule">Populate the Host Risk Score card</a>
+├── <a href="#indicator-match-rule">View CTI dashboards</a>
+├── <a href="#indicator-match-rule">View Host Risk Score dashboards</a>
+├── <a href="#indicator-match-rule">View the CTI row renderer</a>
+└── <a href="#indicator-match-rule">Use the CTI timeline template</a>
+
+team
+├── <a href="#indicator-match-rule">Contributors</a>
+└── <a href="#indicator-match-rule">CTI sync / CTI area sync agenda documents & recordings</a>
+            </pre>
+        </nav>
+    </div>
+</div>
+<div class="content container">
+    <div class="home"><div class="documents">
+  
+  <h1 id="backend">backend</h1>
+<h2 id="indicator-match-rule">Indicator Match Rule</h2>
+<h3 id="about">about</h3>
+<p>Indicator Match Rule is one of the detection rule types offered by Elastic. The general purpose of an indicator match rule is to create alerts when signatures of known threats are found within a subset of events. Indicator Match Rules can be used across clusters with caution. Threat matching is an expensive operation and cluster performance degradations have been associated with indicator match rules in the past. Threat documents can be ingested from third party intelligence sources with package integrations through fleet, filebeat threatintel modules, or other custom integrations.</p>
+
+<h3 id="architecture">architecture</h3>
+<p>The Indicator Match rule type is created by registering a security rule type on the rule registry plugin with the threat match executor on kibana startup. A new rule can then be instantiated through the Create Rule UI or an API call. Just like any other detection rule, continuous rule execution relies on the task manager through the alerting framework. Alerts generated by indicator match rules have threat.enrichment* fields populated. Enrichments are created during the rule execution, and they consist of pieces of the indicator documents placed on the relevant alerts.</p>
+
+<h3 id="executor">executor</h3>
+<p>The threat match executor is where the specific logic belonging to an indicator match rule resides. Historically there have been a variety of techniques used for indicator matching within the threat match executor.</p>
+
+<h4 id="boolean-filter-712---81">boolean filter (7.12 - 8.1)</h4>
+<p>With the assumption that customers have more events than indicator documents, the operation starts by obtaining indicator documents that satisfy the threat_query. The indicator documents that are found are then converted into filters in batches of 9000. The filters are used to query the events index to obtain events that match the found threats. Any resulting hits are then enriched with the respective threats (facilitated by the identifiers baked into the named query), and are written to the alerts index with a bulkCreate operation.</p>
+
+<h4 id="reverse-join-81">reverse join (8.1+)</h4>
+<p>The assumption that the customers have more indicator documents than events have been proven false in a number of SDH issues. To remediate, both event counts according to index_query and threat counts according to threat_query are obtained at first. The boolean filter implementation is then applied to the group of hits that has the smaller number of documents. If no documents are found with the count queries, the rule execution is skipped.</p>
+
+<h4 id="percolator-82">percolator (8.2+)</h4>
+<p>Percolator queries have been suggested for performance improvements as the boolean filter implementation could create extremely large queries that users have complained about in SDHs.</p>
+
+<h2 id="investigation-time-enrichments">Investigation Time Enrichments</h2>
+<h3 id="about-1">about</h3>
+<p>Investigation time enrichments is the result of a threat matching strategy that is independent from the alerting framework and rule execution. Investigation time enrichments are created while an analyst is looking through the details of an existing alert that may have been created by any rule (not just indicator match rule). If the examined alert has any matching threats on a predefined list of fields, <code class="language-plaintext highlighter-rouge">threat.enrichments*</code> fields are accordingly placed on the UI along with the rest of the alert details. Investigation time enrichments are not persisted.</p>
+
+<h3 id="architecture-1">architecture</h3>
+<p>Values of the available fields are obtained from the event, and are used in a filter query on the default threat index to find any matching threats. The search strategy limits the indicators searched with a time query of thirty days by default. The search query can not be modified or disabled. But the date can be modified through the calendar UI.</p>
+
+<h3 id="available-fields">available fields</h3>
+<ul>
+  <li>file.hash.md5 &lt;—&gt; threat.indicator.file.hash.md5</li>
+  <li>file.hash.sha1 &lt;—&gt; threat.indicator.file.hash.sha1</li>
+  <li>file.hash.sha256</li>
+  <li>source.ip</li>
+  <li>domain.ip</li>
+  <li>url.full</li>
+</ul>
+
+<h2 id="default_threat_index-ui-setting">default_Threat_index UI setting</h2>
+<h3 id="about-2">about</h3>
+<p>Default threat index is provided by elastic to create an out-of-the-box experience for threat intelligence features in Elastic Security. With the 8.0 release, logs-ti_* index, which is the index pattern corresponding to fleet integration packages, is the default value. Prevously filebeat* has been used as the filebeat threatintel modules were the suggested way of obtaining threatintel in elastic. Default threat index value can be modified through the UI by going to Stack Management / Kibana Advanced Settings and searching for defaultThreatIndex.</p>
+
+<h3 id="placements">Placements</h3>
+<ul>
+  <li>indicator match rule default value for threat_index</li>
+  <li>investigation time enrichments value for threat index</li>
+  <li>CTI card</li>
+</ul>
+
+<h2 id="default_threat_query--default-from">default_threat_query / default from</h2>
+<h3 id="about-3">About</h3>
+<p>Default threat query has been created to ensure that indicator documents are narrowed down for threat matching. The product decision to limit indicator documents by a month has been made as indicators are time sensitive and more relevant as they are closer to the current time. The purpose of narrowing down the number of documents is to improve threat matching performance.</p>
+
+<h3 id="placements-1">placements</h3>
+<ul>
+  <li>indicator match rule default value for threat_query</li>
+  <li>investigation time enrichments value for calendar UI</li>
+</ul>
+
+<h2 id="indicator-match-rule-preview">Indicator Match Rule Preview</h2>
+<h3 id="about-4">about</h3>
+<p>Indicator match rule preview feature is created to ensure that the indicator match rule that is desired to be created can be viewed through the preview UI as a part of the create rule flow define step. The most important part of the preview is to surface errors and warnings to the UI before the rule is created, so that if there are any issues with the rule configuration, the issues could be identified before the rule is actually created in production. In the future, warnings that are specific to indicator match rules (such as “too many events” or “too many indicators” to encourage the users to use the index query and threat query more effectively are considered.</p>
+
+<h3 id="architecture-2">architecture</h3>
+<p>The indicator match rule preview uses the threat match executor, and is thus a close approximation of the rule execution (as it is not a search strategy used to simulate the rule execution, but the rule execution itself). However, the alerting framework and the task manager are not a part of the preview implementation. Once a POST request is made to the detection/rules/preview endpoint is made with the appropriate parameters, the threat match executor is used with a preview specific rule data client where the alerts generated are written to a specific space-aware preview index and a unique preview id. The preview UI then queries the preview index with the preview id with a matrix histogram query and displays the results. The preview index has a special ILM policy where it rolls over every day and cleaned every other day.</p>
+
+<h4 id="parameters">parameters</h4>
+<p>Since the rule preview is placed at the very beginning of the UI (define step), a lot of the parameters that would could be defined in the later steps are not known by the time that the preview request is triggered. To enable the rule execution some of those required but missing parameters are supplied by default.</p>
+<ul>
+  <li>interval: 1h</li>
+  <li>from 5min</li>
+  <li>advanced settings not supplied</li>
+  <li>threat_indicator_path default</li>
+</ul>
+
+<h4 id="limitations">limitations</h4>
+
+<h5 id="limited-number-of-alerts-can-be-previewed-max_signals-constraint">limited number of alerts can be previewed (max_signals constraint)</h5>
+<p>Detection engine uses a concept called max_signals in general, which means that a single rule execution can only return up to a 100 alerts, and subsequent missing alerts would be picked up with the gap-detection strategy with the next rule execution. However, there is no gap detection strategy with the indicator match rule preview implementation as the rule execution is triggered only once, with the parameters listed above. Therefore indicator match rule can show a preview only up to a 100 alerts in a single preview.</p>
+
+<h5 id="only-ecs-compliant-indices-can-be-previewed-threat_indicator_path-constraint">only ECS compliant indices can be previewed (threat_indicator_path constraint)</h5>
+<p>threat_indicator_path is default as discussed in the parameters sections, which means that the threat matching can not happen with a custom indicator path, which means that preview won’t return results otherwise as the executor can’t go ahead with the enrichment step (should this be skipped for preview?)</p>
+
+<h3 id="performance-concerns">Performance concerns</h3>
+<p>Indicator match rules have been disabled at 8.0.0 as the single rule execution can take many seconds even with the most barebones implementation. There is no inherent mechanism to stop the rule execution if it starts taking a really long time, and it can clog up the system with no remediation strategy other than restarting the server if it starts hanging due to a huge query execution time. Given the circumstances the preview functionality has not been deemed production-ready at this time.</p>
+
+<h2 id="ecs-threat-fields">ECS threat.* fields</h2>
+<h3 id="about-5">about</h3>
+<p>ECS fields are used to standardize the data format of elastic search indice schemas so that we can build products with some proedictability. Normally they are used internally, but if a user wants to add a new threat index, or a new threat feed, for best purposes they should absolutely use the latest ECS at all times, and update their indices according to the latest specs every time there is a release update, to ensure that the features work properly and there is no random data missing.</p>
+
+<h3 id="threatindicator">threat.indicator*</h3>
+<p>threat.indicator fields are meant for the indicator documents, and it contains information such as file hashes, ip addresses, it’s for source events.</p>
+
+<h3 id="threatenrichments">threat.enrichments*</h3>
+<p>threat.enrichment fields are meant to be on the alerts and it’s once the enrichments are added on the threats that the indicators show up on the alerts, they are basically the same as the threat.indicator fields.</p>
+
+<h3 id="threatfeed">threat.feed*</h3>
+<p>threat.feed has some metadata around the feed, we use threat.feed.name and threat.feed.dashboard_id to populate the UI in the CTI card.</p>
+
+<h3 id="threat_indicator_path">threat_indicator_path</h3>
+<p>thraet.indicator.path is the source path of the threat data, and it is used to override the default threat.indicator value during the enrichments process. This is especially useful as historically in filebeat 7* there were fields such as threatintel.indicator, which is the default value for then. We can easily override that, or any other place in any other index, with the threat indicator path. All threat data has to be in one place though, so even in a custom index, if there is file.hash.md5 under custom.test, and threat.indicator.path is custom.test, and there is file.hash.xyz under custom.test2, only the correct path one can be added onto the alert as the enrichment.</p>
+
+<h2 id="prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</h2>
+<h3 id="about-6">about</h3>
+<p>Prebuilt rules are built by the elastic protections team so that customers can start enabling it immediately and they can have an out of the box experience with threat intelligence in their platform. The rules are created with the latest information and the important techniques. Up until 7 there was only the filebeat rule, which have resulted in a lot of SDHs. In the 8 release we have opted to ship multiple rules so that they can be disabled at will if any of them start behaving badly.</p>
+
+<h3 id="filebeat-7-rule">filebeat 7* rule</h3>
+<p>This rule uses the filebeat data with ECS 1.10 to fulfill the following query.</p>
+
+<h3 id="filebeat-8-rule">filebeat 8* rule</h3>
+<p>This rule is uses the filebeat data with ECS 1.11 to fulfill the following query.</p>
+
+<h3 id="fleet-8-rule">fleet 8* rule</h3>
+<p>This rules the fleet data with the ECS 1.11 to fulfill the following query.</p>
+
+<h2 id="detection-engine-key-concepts">detection engine key concepts</h2>
+<p>These are some important concepts that are important for CTI features to exist</p>
+
+<h3 id="detection-rule">detection rule</h3>
+<p>Query that executes in intervals until user deactivates the rule.</p>
+
+<h3 id="alert">alert</h3>
+<p>Document that gets created when the rule condition is met.</p>
+
+<h3 id="preview">preview</h3>
+<p>Alert Document that gets created on a separate preview index that is different than the regular alerts index.</p>
+
+<h3 id="search-strategy">search strategy</h3>
+<p>Kibana way of writing a search query.</p>
+
+
+  
+  <h1 id="fronttt">fronttt</h1>
+
+  
+  aaa
+</div>
+</div>
+
+</div>
+</body>
+</html>
