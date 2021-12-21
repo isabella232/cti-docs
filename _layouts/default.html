@@ -34,31 +34,51 @@
     <div class="container sidebar-sticky">
         <div class="sidebar-about">
             <h1>
-                <a href="{{ site.baseurl }}">
+                <a class="home-link" href="{{ site.baseurl }}">
                     <img src="{{ site.baseurl }}public/security-logo-color.png"/>
                 </a>
             </h1>
-            <p class="lead">{{ site.description }}</p>
+            <p class="lead"><span>Cyber Threat Intelligence</span> Onboarding Documentation</p>
         </div>
         <nav class="sidebar-nav">
-            <pre>
+            <pre style="background:none;">
 backend
-├── Indicator Match Rule
+├── <a href="#indicator-match-rule">Indicator Match Rule</a>
 │   ├── about
 │   ├── architecture
 │   └── executor
-│       ├── Boolean filter implementation
-│       ├── Reverse join implementation
-│       └── Percolator implementation
-├── Investigation Time Enrichments
+│       ├── Boolean filter (v7.12+)
+│       ├── Reverse join (v8.1+)
+│       └── Percolator (v8.2+)
+├── <a href="#investigation-time-enrichments">Investigation Time Enrichments</a>
 │   ├── about
 │   ├── architecture
 │   └── available fields
-├── default_Threat_index UI setting
+├── <a href="#ecs-threat-fields">ECS threat.* fields</a>
 │   ├── about
-│   └──placements
-└── docs/
-└── examples/
+│   └── default_threat_index UI setting
+├── <a href="#indicator-match-rule-preview">Indicator match rule preview</a>
+├── <a href="#prebuilt-indicator-match-rules">prebuilt indicator match rules</a>
+│   ├── filebeat 7.x rule
+│   ├── filebeat 8.x rule
+│   └── Fleet integrations rule
+└── <a href="#detection-engine-key-concepts">detection engine: key concepts</a>
+
+frontend
+├── <a href="#indicator-match-rule">Indicator Match Rule</a>
+│   ├── Create UI
+│   ├── Edit UI
+│   └── Rule Details UI
+├── <a href="#indicator-match-rule">Alert Details Flyout</a>
+│   ├── CTI on Alert Summary Tab
+│   └── Threat Intel Tab
+├── <a href="#indicator-match-rule">Threat Intelligence Card</a>
+├── <a href="#indicator-match-rule">CTI Row Renderer</a>
+├── <a href="#indicator-match-rule">CTI Timeline template</a>
+├── <a href="#indicator-match-rule">CTI dashboards</a>
+│   ├── Filebeat threat intel dashboards
+│   └── Fleet threat intel dashboards
+└── <a href="#indicator-match-rule">Host Risk Score Card</a>
             </pre>
         </nav>
     </div>

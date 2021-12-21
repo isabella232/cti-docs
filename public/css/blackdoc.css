@@ -43,7 +43,24 @@ h4,
 h5,
 h6 {
   font-family: 'Inter', serif;
-  color: rgb(225,225,225);
+}
+
+h1 {
+color: rgb(225,225,225);
+}
+
+h2 {
+color: #ff8a65;
+}
+
+h3 {
+  color: #87ffff;
+}
+
+h4,
+h5,
+h6 {
+color: #4dd0e1;
 }
 
 h1 a,
@@ -65,7 +82,7 @@ a {
 }
 
 a:hover {
-  color: #caad00;
+  color: #ff8a65;
 }
 
 .btn {
@@ -206,12 +223,12 @@ tbody tr:nth-child(odd) th {
 
 /* Sidebar links */
 .sidebar a {
-  color: #caad00;
+  color: #ff8a65;
 }
 
 /* About section */
 .sidebar-about h1 {
-  color: #caad00;
+  color: #ff8a65;
   margin-top: 0;
   font-family: 'Noto Serif', serif;
   font-size: 2.25rem;
@@ -285,7 +302,7 @@ a.sidebar-nav-item:focus {
 .page-title,
 .post-title,
 .post-title a {
-  color: #caad00;
+  color: #ff8a65;
 }
 
 /*
@@ -414,4 +431,10 @@ a.sidebar-nav-item:focus {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #7d7d7d;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

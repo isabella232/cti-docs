@@ -93,6 +93,7 @@ h1 {
 h2 {
   margin-top: 1rem;
   font-size: 1.5rem;
+  color: #ff8a65;
 }
 h3 {
   margin-top: 1.5rem;
@@ -260,8 +261,15 @@ tbody tr:nth-child(odd) th {
  */
 
 .lead {
-  font-size: 1.25rem;
+  text-align: center;
+  font-size: 1.4rem;
   font-weight: 300;
+  color: #87ffff;
+}
+
+.lead span {
+  font-size: 1.7rem;
+  color: white;
 }
 
 
