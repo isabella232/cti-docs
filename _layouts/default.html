@@ -30,17 +30,17 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 <body>
-        <div class="sidebar">
-            <div class="container sidebar-sticky">
-                <div class="sidebar-about">
-                    <h1>
-                        <a href="{{ site.baseurl }}">
-                           <img src="{{ site.baseurl }}public/security-logo-color.png"/>
-                        </a>
-                    </h1>
-                    <p class="lead">{{ site.description }}</p>
-                </div>
-                <nav class="sidebar-nav">
+<div class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="sidebar-about">
+            <h1>
+                <a href="{{ site.baseurl }}">
+                    <img src="{{ site.baseurl }}public/security-logo-color.png"/>
+                </a>
+            </h1>
+            <p class="lead">{{ site.description }}</p>
+        </div>
+        <nav class="sidebar-nav">
             <pre>
 backend
 ├── Indicator Match Rule
@@ -60,10 +60,9 @@ backend
 └── docs/
 └── examples/
             </pre>
-
-                </nav>
-            </div>
-        </div>
+        </nav>
+    </div>
+</div>
 <div class="content container">
     {{ content }}
 </div>
