@@ -121,10 +121,12 @@ Indicator match rule preview feature is created to ensure that an indicator matc
 The indicator match rule preview uses the threat match executor, and is thus a close approximation of the rule execution (as it is not a search strategy used to simulate the rule execution, but the rule execution itself). However, the alerting framework and the task manager are not a part of the preview implementation. Once a POST request is made to the detection/rules/preview endpoint is made with the appropriate parameters, the threat match executor is used with a preview specific rule data client where the alerts generated are written to a specific space-aware preview index and a unique preview id. The preview UI then queries the preview index with the preview id with a matrix histogram query and displays the results. The preview index has a special ILM policy where it rolls over every day and cleaned every other day.
 
 Since the rule preview is placed at the very beginning of the UI (define step), a lot of the parameters that would could be defined in the later steps are not known by the time that the preview request is triggered. To enable the rule execution some of those required but missing parameters are supplied by default.
-- interval: 1h
-- from 5min
-- advanced settings not supplied
-- threat_indicator_path default
+
+|---|---|
+|`interval`|1h|
+|`from`|5m|
+|`threat_indicator_path`|`threat.indicator`|
+|Advanced Settings| - |
 
 #### Limitations
 
