@@ -36,7 +36,7 @@ With the assumption that customers have more source event documents than indicat
 The assumption that the customers have more source event documents than indicator documents has been challenged in a number of SDH issues. To remediate, instead of obtaining indicators to convert them into queries for the events index, event counts and indicator counts are compared at the beginning of the rule execution, and the boolean filter implementation is then applied to the group of hits that has the smaller number of documents. If no documents are found with the count queries, the rule execution is skipped.
 
 #### Percolator - percolateExecutor (8.2+)
-Percolator queries have been suggested for performance improvements as an alternate way of executing the rule. More information about how the percolate queries are used can be found in this document. https://docs.google.com/document/d/1QyU-AXcpUfNLyhw--_QyXPqaL2wjCeB2oRWgmC1Quuo/edit#heading=h.w89jskll7q8n
+Percolator queries have been suggested for performance improvements as an alternate way of executing the rule.
 <img style="max-width:1200px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/percolate_executor.png"/>
 
 ## Investigation Time Enrichments
