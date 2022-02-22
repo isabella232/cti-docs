@@ -30,12 +30,14 @@ The threat match executor is where the specific logic that belongs to an indicat
 
 #### Boolean filter - threatMatchExecutor (7.12+)
 With the assumption that customers have more source event documents than indicator documents, the operation starts by obtaining indicator documents in batches of 9000 that satisfy the threat_query. Found indicator documents are then converted into filters for querying the events index to obtain matching events. Any resulting event hits are then enriched with the respective threats (facilitated by the identifiers baked into the named query, indicators must be requested again for threat.indicator.* fields), and are written to the alerts index with a bulkCreate operation.
+<img style="max-width:1200px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/threat_match_executor.png"/>
 
 #### Reverse join - threatMatchExecutor(8.2+)
 The assumption that the customers have more source event documents than indicator documents has been challenged in a number of SDH issues. To remediate, instead of obtaining indicators to convert them into queries for the events index, event counts and indicator counts are compared at the beginning of the rule execution, and the boolean filter implementation is then applied to the group of hits that has the smaller number of documents. If no documents are found with the count queries, the rule execution is skipped.
 
 #### Percolator - percolateExecutor (8.2+)
 Percolator queries have been suggested for performance improvements as an alternate way of executing the rule. More information about how the percolate queries are used can be found in this document. https://docs.google.com/document/d/1QyU-AXcpUfNLyhw--_QyXPqaL2wjCeB2oRWgmC1Quuo/edit#heading=h.w89jskll7q8n
+<img style="max-width:1200px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/percolate_executor.png"/>
 
 ## Investigation Time Enrichments
 ### About
