@@ -36,11 +36,11 @@ Multiple test cases have been created for measuring the indicator match rule per
 
 The following are the results comparing the 8.0 and 8.1 branches to one another according to the cases outlined above.
 
-<img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/benchmark.png"/>
+<img style="max-width:100%;" src="https://ecezalp.github.io/cti-docs-demo/public/images/benchmark.png"/>
 
 ## Rule execution timeline with APM
 APM is helpful for monitoring the CPU and memory usage while the Indicator Match rules are running, and it provides an important supporting metric to results obtained by kbn-alert-load.
 
 Individual requests can also be observed with APM. The following is the difference between the execution time of an individual query made to the threat index to obtain indicators. 
 
-<img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/apm.png"/>
+<img style="max-width:100%;" src="https://ecezalp.github.io/cti-docs-demo/public/images/apm.png"/>
