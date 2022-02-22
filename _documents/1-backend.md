@@ -62,10 +62,10 @@ The following source event fields are matched against the following threat indic
 ### Comparison of enrichment logic
 
 With indicator match rules, enrichments are made before the alerts are created, and they are persisted along with the alert.
-<img style="max-width:900px;" src="/public/images/events.png"/>
+<img style="max-width:900px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/events.png"/>
 <br/>
 With investigation time enrichments, enrichments are done after the alert has been created, and the enrichments are not persisted.
-<img style="max-width:900px;" src="/public/images/alerts.png"/>
+<img style="max-width:900px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/alerts.png"/>
 
 ## ECS threat.* fields
 
