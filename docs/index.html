@@ -110,12 +110,12 @@
     └── <a href="#rule-execution-timeline-with-apm">Rule Execution Timeline with APM</a>
 
     manual regression suites
-    ├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
-    ├── <a href="#indicator-match-rule">Create an investigation time enrichment</a>
-    ├── <a href="#indicator-match-rule">Populate the CTI card</a>
-    ├── <a href="#indicator-match-rule">View CTI dashboards</a>
-    ├── <a href="#indicator-match-rule">View the CTI row renderer</a>
-    └── <a href="#indicator-match-rule">Use the CTI timeline template</a>
+    ├── <a href="#create-an-alert-from-an-indicator-match-rule">Create an alert from an indicator match rule</a>
+    ├── <a href="#create-an-investigation-time-enrichment">Create an investigation time enrichment</a>
+    ├── <a href="#populate-the-cti-card">Populate the CTI card</a>
+    ├── <a href="#view-cti-dashboards">View CTI dashboards</a>
+    ├── <a href="#view-the-cti-row-renderer">View the CTI row renderer</a>
+    └── <a href="#use-the-cti-timeline-template">Use the CTI timeline template</a>
 
                 </pre>
             </nav>
@@ -724,7 +724,87 @@ Multiple test cases have been created for measuring the indicator match rule per
   
   <h1 id="manual-regression-suites">manual regression suites</h1>
 
-<p>in progress</p>
+<h2 id="create-an-alert-from-an-indicator-match-rule">Create an alert from an indicator match rule</h2>
+<ul>
+  <li>run Elasticsearch + kibana locally, or deploy a cloud instance</li>
+  <li>navigate to Kibana Dev Tools</li>
+  <li>create an event index with the following query</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT test-index
+</code></pre></div></div>
+
+<ul>
+  <li>add the date mapping for the <code class="language-plaintext highlighter-rouge">@timestamp</code> field</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT test-index/_mapping
+{
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    }
+  }
+}
+</code></pre></div></div>
+<ul>
+  <li>get a fresh timestamp value by opening the browser javascript console and executing</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Date().valueOf()
+</code></pre></div></div>
+
+<ul>
+  <li>copy the value (for example, <code class="language-plaintext highlighter-rouge">1645547413852</code>) and make the following request to create a source event. 
+Note: in this example, a field named <code class="language-plaintext highlighter-rouge">test-field</code> is added to the event. Indicator Match rules work with all events, but ECS compliant fields are recommended for use.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST test-index/_doc
+{
+  "@timestamp": 1645547413852,
+  "test-field": "test-value"
+}
+</code></pre></div></div>
+
+<ul>
+  <li>create a threat index with a date type <code class="language-plaintext highlighter-rouge">@timestamp</code> field.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT threat-index
+
+PUT threat-index/_mapping
+{
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    }
+  }
+}
+
+PUT threat-index/_doc
+{
+  "@timestamp": 1645547413852,
+  "threat-field": "test-value"
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Create a new indicator match rule, with <code class="language-plaintext highlighter-rouge">test-index</code> as the index value, <code class="language-plaintext highlighter-rouge">threat-index</code> as the threat index value.</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">test-field</code> to index field, and <code class="language-plaintext highlighter-rouge">threat-field</code> to indicator field to create the threat mapping.</li>
+  <li>Create the rule with a name, description, schedule, and interval.</li>
+  <li>Alert will appear on the alerts table once the rule execution is complete.</li>
+  <li>For better indicator documents, <a href="#setting-up-fleet-threat-integrations">setup a threat intel integration</a> and use a field from there to match an event.</li>
+</ul>
+
+<h2 id="create-an-investigation-time-enrichment">Create an investigation time enrichment</h2>
+
+<h2 id="populate-the-cti-card">Populate the CTI card</h2>
+
+<h2 id="view-cti-dashboards">View CTI dashboards</h2>
+
+<h2 id="view-the-cti-row-renderer">View the CTI row renderer</h2>
+
+<h2 id="use-the-cti-timeline-template">Use the CTI timeline template</h2>
 
   
 </div>
