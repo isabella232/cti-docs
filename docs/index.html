@@ -797,14 +797,112 @@ PUT threat-index/_doc
 </ul>
 
 <h2 id="create-an-investigation-time-enrichment">Create an investigation time enrichment</h2>
+<ul>
+  <li>run Elasticsearch + kibana locally, or deploy a cloud instance</li>
+  <li>navigate to Kibana Dev Tools</li>
+  <li>create an event index with the following query</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT test-index
+</code></pre></div></div>
+
+<ul>
+  <li>add the date mapping for the <code class="language-plaintext highlighter-rouge">@timestamp</code> field</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT test-index/_mapping
+{
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    }
+  }
+}
+</code></pre></div></div>
+<ul>
+  <li>get a fresh timestamp value by opening the browser javascript console and executing</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new Date().valueOf()
+</code></pre></div></div>
+
+<ul>
+  <li>copy the value (for example, <code class="language-plaintext highlighter-rouge">1645547413852</code>) and make the following request to create a source event. Make sure to include a field that is suitable for <a href="(#invetigation-time-enrichments)">investigation time enrichments</a>.
+Note: in this example, <code class="language-plaintext highlighter-rouge">file.hash.md5</code> is used for creating the investigation time enrichment. Also, a field named <code class="language-plaintext highlighter-rouge">test-field</code> is added to the event. Indicator Match rules work with all events, but ECS compliant fields are recommended for use.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST test-index/_doc
+{
+  "@timestamp": 1645547413852,
+  "test-field": "test-value",
+  "file": {
+    "hash: {
+      "md5": "test-md5"
+    }
+  }
+}
+</code></pre></div></div>
+
+<ul>
+  <li>create a threat index with a date type <code class="language-plaintext highlighter-rouge">@timestamp</code> field, and add the value requied for the investigation time enrichment (in this example, <code class="language-plaintext highlighter-rouge">threat.indicator.file.hash.md5</code>)</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PUT threat-index
+
+PUT threat-index/_mapping
+{
+  "properties": {
+    "@timestamp": {
+      "type": "date"
+    }
+  }
+}
+
+PUT threat-index/_doc
+{
+  "@timestamp": 1645547413852,
+  "threat": {
+    "indicator": {
+      "file": {
+        "hash": {
+          "md5": "test-md5"
+        }
+      }
+    }
+  }
+}
+</code></pre></div></div>
+
+<ul>
+  <li>add <code class="language-plaintext highlighter-rouge">threat-index</code> to <a href="#cti-contants">defaultThreatIndex</a> UI setting in Stack Management / Advanced Settings</li>
+  <li>create any rule that would pick up on the source event, such as a custom query rule with the index <code class="language-plaintext highlighter-rouge">test-index</code> and query <code class="language-plaintext highlighter-rouge">test-field:*</code></li>
+  <li>once the alert is created, expand the alert to view it on the <a href="#alert-details-flyout">Alert Flyout</a>. You will find the investigation time enrichment on the <code class="language-plaintext highlighter-rouge">file.hash.md5</code> field on the Overview tab and the Threat Intel tab.</li>
+</ul>
 
 <h2 id="populate-the-cti-card">Populate the CTI card</h2>
 
+<ul>
+  <li><a href="#setting-up-fleet-threat-integrations">Enable one of the threat intel integrations</a> to view the CTI card populated on the Security Overview page.</li>
+</ul>
+
 <h2 id="view-cti-dashboards">View CTI dashboards</h2>
+<ul>
+  <li><a href="#setting-up-fleet-threat-integrations">Enable one of the threat intel integrations</a> to obtain the dashboards.</li>
+  <li>Click on the <code class="language-plaintext highlighter-rouge">Source</code> link on the <a href="#threat-intelligence-card">CTI Card</a> for the dashboard you would like to view</li>
+  <li>You can also visit Analyze / Dashboards and search for the <code class="language-plaintext highlighter-rouge">threat intel</code> tag to find any threat intel dashboards.</li>
+</ul>
 
 <h2 id="view-the-cti-row-renderer">View the CTI row renderer</h2>
+<ul>
+  <li>Create an alert with threat intelligence enrichments by using the indicator match rule (<a href="#create-an-alert-from-an-indicator-match-rule">instructions</a>)</li>
+  <li>Find the alert on the alert summary table and click on the timeline view button.</li>
+  <li>You can now see the alert automatically using the <a href="#cti-row-renderer">CTI row renderer</a> view.</li>
+</ul>
 
 <h2 id="use-the-cti-timeline-template">Use the CTI timeline template</h2>
+<ul>
+  <li>Navigate to Security / Timelines / Templates and click on <code class="language-plaintext highlighter-rouge">Generic Threat Match Template</code> to view and use the threat match template.</li>
+</ul>
 
   
 </div>
