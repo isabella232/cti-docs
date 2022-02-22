@@ -48,12 +48,12 @@ h6 {
 
 h1 {
   padding-top: 60px;
-color: rgb(225,225,225);
+  color: rgb(225,225,225);
 }
 
 h2 {
   padding-top: 60px;
-color: #ff8a65;
+  color: #ff8a65;
 }
 
 h3 {
@@ -63,7 +63,7 @@ h3 {
 h4,
 h5,
 h6 {
-color: #4dd0e1;
+  color: #4dd0e1;
 }
 
 h1 a,
@@ -206,7 +206,6 @@ tbody tr:nth-child(odd) th {
  */
 
 .sidebar {
-  text-align: center;
   padding: 2rem 1rem;
   color: rgb(225,225,225);
   background-color: rgb(30,30,30);

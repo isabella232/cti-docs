@@ -206,7 +206,6 @@ tbody tr:nth-child(odd) th {
  */
 
 .sidebar {
-  text-align: center;
   padding: 2rem 1rem;
   color: rgb(225,225,225);
   background-color: rgb(30,30,30);
