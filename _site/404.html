@@ -9,22 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
     <title>
-        {% if page.title == "Home" %}
-        {{ site.title }} &middot; {{ site.tagline }}
-        {% else %}
-        {{ page.title }} &middot; {{ site.title }}
-        {% endif %}
+        
+         &middot; CTI Onboarding Docs
+        
     </title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ site.baseurl }}public/css/poole.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}public/css/syntax.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}public/css/blackdoc.css">
+    <link rel="stylesheet" href="public/css/poole.css">
+    <link rel="stylesheet" href="public/css/syntax.css">
+    <link rel="stylesheet" href="public/css/blackdoc.css">
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Inter">
     <!-- Icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144"
-          href="{{ site.baseurl }}public/apple-touch-icon-144-precomposed.png">
-    <link rel="shortcut icon" href="{{ site.baseurl }}public/security-logo-color.png">
+          href="public/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="public/security-logo-color.png">
 
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -39,8 +37,8 @@
             <div class="sidebar-about">
 
                 <p class="lead">
-                <div class="lead-logo"><a class="home-link" href="{{ site.baseurl }}">
-                        <img src="{{ site.baseurl }}public/security-logo-color.png"/>
+                <div class="lead-logo"><a class="home-link" href="">
+                        <img src="public/security-logo-color.png"/>
             </a></div>
                 <p class="lead"><span>Cyber Threat Intelligence</span> Onboarding Documentation</p>
 
@@ -129,7 +127,27 @@
         </div>
     </div>
     <div class="content container">
-        {{ content }}
+        <style type="text/css" media="screen">
+  .container {
+    margin: 10px auto;
+    max-width: 600px;
+    text-align: center;
+  }
+  h1 {
+    margin: 30px 0;
+    font-size: 4em;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+</style>
+
+<div class="container">
+  <h1>404</h1>
+
+  <p><strong>Page not found :(</strong></p>
+  <p>The requested page could not be found.</p>
+</div>
+
     </div>
     </body>
     </html>

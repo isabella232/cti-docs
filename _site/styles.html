@@ -28,94 +28,106 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 </head>
 <body>
-<div class="sidebar">
-    <div class="container sidebar-sticky">
-        <div class="sidebar-about">
-            <h1>
-                <a class="home-link" href="">
-                    <img src="public/security-logo-color.png"/>
-                </a>
-            </h1>
-            <p class="lead"><span>Cyber Threat Intelligence</span> Onboarding Documentation</p>
-        </div>
-        <nav class="sidebar-nav">
-            <pre style="background:none;">
-backend
-├── <a href="#indicator-match-rule">Indicator Match Rule</a>
-│   ├── about
-│   ├── architecture
-│   └── executor
-│       ├── Boolean filter (v7.12+)
-│       ├── Reverse join (v8.1+)
-│       └── Percolator (v8.2+)
-├── <a href="#investigation-time-enrichments">Investigation Time Enrichments</a>
-│   ├── about
-│   ├── architecture
-│   └── available fields
-├── <a href="#ecs-threat-fields">ECS threat.* fields</a>
-│   ├── about
-│   └── default_threat_index UI setting
-├── <a href="#indicator-match-rule-preview">Indicator Match Rule Preview</a>
-├── <a href="#prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</a>
-│   ├── filebeat 7.x rule
-│   ├── filebeat 8.x rule
-│   └── Fleet integrations rule
-└── <a href="#detection-engine-key-concepts">Detection Engine: Key Concepts</a>
-
-frontend
-├── <a href="#indicator-match-rule">Indicator Match Rule</a>
-│   ├── Create UI
-│   ├── Edit UI
-│   └── Rule Details UI
-├── <a href="#indicator-match-rule">Alert Details Flyout</a>
-│   ├── CTI on Alert Summary Tab
-│   └── Threat Intel Tab
-├── <a href="#indicator-match-rule">Threat Intelligence Card</a>
-├── <a href="#indicator-match-rule">CTI Row Renderer</a>
-├── <a href="#indicator-match-rule">CTI Timeline template</a>
-├── <a href="#indicator-match-rule">CTI dashboards</a>
-│   ├── Filebeat threat intel dashboards
-│   └── Fleet threat intel dashboards
-└── <a href="#indicator-match-rule">Host Risk Score Card</a>
-
-setup
-├── <a href="#indicator-match-rule">Setting up filebeat threatintel integrations</a>
-├── <a href="#indicator-match-rule">Setting up Fleet threat Integrations</a>
-└── <a href="#indicator-match-rule">Setting up Host Risk Scoring</a>
-
-general setup
-├── <a href="#indicator-match-rule">Setting up ES and kibana</a>
-│   └── security solution scripts
-├── <a href="#indicator-match-rule">Running Security Solution API Integration tests</a>
-├── <a href="#indicator-match-rule">Running Security Solution jest tests</a>
-└── <a href="#indicator-match-rule">Running Security Solution cypress tests</a>
-
-performance
-├── <a href="#indicator-match-rule">Performance Benchmarking with kbn-alert-load</a>
-├── <a href="#indicator-match-rule">Rule Execution Timeline with APM</a>
-├── <a href="#indicator-match-rule">Indicator Match Rule SDH troubleshooting guide</a>
-├── <a href="#indicator-match-rule">Previous SDHs related to Indicator Match Rules</a>
-└── <a href="#indicator-match-rule">Performance Epic</a>
-
-manual regression suites
-├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
-├── <a href="#indicator-match-rule">Create an investigation time enrichment</a>
-├── <a href="#indicator-match-rule">Populate the CTI card</a>
-├── <a href="#indicator-match-rule">Populate the Host Risk Score card</a>
-├── <a href="#indicator-match-rule">View CTI dashboards</a>
-├── <a href="#indicator-match-rule">View Host Risk Score dashboards</a>
-├── <a href="#indicator-match-rule">View the CTI row renderer</a>
-└── <a href="#indicator-match-rule">Use the CTI timeline template</a>
-
-team
-├── <a href="#indicator-match-rule">Contributors</a>
-└── <a href="#indicator-match-rule">CTI sync / CTI area sync agenda documents & recordings</a>
-            </pre>
-        </nav>
+<div class="banner">
+    <div style="background:rgb(18,18,18);border-bottom:5px solid rgb(30,30,30);color:white;font-weight:300;width:100%;height:60px;padding-top:8px;padding-right:20px;text-align:right;font-size:26px;position:fixed;">
+    <svg style="height:32px;width:32px;margin-right:12px;margin-bottom:-3px;" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 200 199.22"><defs><style>.cls-1{fill:#fff;}.cls-2{fill:#fec514;}.cls-3{fill:#00bfb3;}.cls-4{fill:#f04e98;}.cls-5{fill:#1ba9f5;}.cls-6{fill:#93c90e;}.cls-7{fill:#07c;}</style></defs><title>glyph-elastic-cluster-color</title><g id="glyph-elastic-cluster-color"><path class="cls-1" d="M200,104.38a39.35,39.35,0,0,0-26-37.12A56.48,56.48,0,0,0,72.72,23.44,30,30,0,0,0,26.24,57.61,39.88,39.88,0,0,0,0,94.87,39.39,39.39,0,0,0,26.15,132.1a57.93,57.93,0,0,0-1,10.74,56.33,56.33,0,0,0,102.13,32.85,30,30,0,0,0,46.51-34.05A39.88,39.88,0,0,0,200,104.38"/><path class="cls-2" d="M78.63,85.8l43.76,20,44.16-38.69a48.79,48.79,0,0,0,.95-9.7,49.35,49.35,0,0,0-90.07-27.9l-7.34,38.1Z"/><path class="cls-3" d="M33.33,132.14a50.16,50.16,0,0,0-1,9.85,49.48,49.48,0,0,0,90.4,27.83l7.29-38-9.72-18.59-43.94-20Z"/><path class="cls-4" d="M33.05,56.41l30,7.08,6.58-34.1a23.71,23.71,0,0,0-36.57,27"/><path class="cls-5" d="M30.45,63.55A33.08,33.08,0,0,0,29,125.87l42.08-38-7.72-16.5Z"/><path class="cls-6" d="M130.46,169.81a23.41,23.41,0,0,0,14.28,4.89,23.71,23.71,0,0,0,22.2-31.85l-30-7Z"/><path class="cls-7" d="M136.55,128l33,7.71a33.37,33.37,0,0,0,22.72-31.41,33,33,0,0,0-21.32-30.85l-43.15,37.8Z"/></g></svg>Elastic Security</div>
     </div>
-</div>
-<div class="content container">
-    <article class="post">
+    <div class="sidebar">
+        <div class="container sidebar-sticky">
+            <div class="sidebar-about">
+
+                <p class="lead">
+                <div class="lead-logo"><a class="home-link" href="">
+                        <img src="public/security-logo-color.png"/>
+            </a></div>
+                <p class="lead"><span>Cyber Threat Intelligence</span> Onboarding Documentation</p>
+
+            </div>
+            <nav class="sidebar-nav">
+                <pre style="background:none;">
+    Backend
+    ├── <a href="#indicator-match-rule">Indicator Match Rule</a>
+    │   ├── About
+    │   ├── threat_match rule parameters
+    │   ├── Architecture
+    │   └── Executor
+    │       ├── Boolean filter (v7.12+)
+    │       ├── Reverse join (v8.2+)
+    │       └── Percolator (v8.2+)
+    ├── <a href="#investigation-time-enrichments">Investigation Time Enrichments</a>
+    │   ├── About
+    │   └── Architecture & available fields
+    │   └── Comparison of enrichment logic
+    ├── <a href="#ecs-threat-fields">ECS threat.* fields</a>
+    │   ├── About
+    │   ├── threat.enrichments.matched.* fields
+    │   └── threat.feed.* fields
+    ├── <a href="#threat_indicator_path">threat_indicator_path</a>
+    ├── <a href="#cti-constants">CTI constants</a>
+    │   ├── max_signals rule parameter
+    │   ├── 9000 as the default threat batch count
+    │   ├── defaultIndex Kibana UI Setting
+    │   ├── defaultThreatIndex Kibana UI Setting
+    │   └── default indicator index query
+    ├── <a href="#indicator-match-rule-preview">Indicator Match Rule Preview</a>
+    │   ├── About
+    │   ├── Architecture & parameters
+    │   └── Limitations
+    └──<a href="#prebuilt-indicator-match-rules">Prebuilt Indicator Match Rules</a>
+        ├── Threat Intel Indicator Match
+        ├── Threat Intel Filebeat Module (v8.x) Indicator Match
+        └── Threat Intel Filebeat Module (v7.x) Indicator Match (deprecated)
+
+    Frontend
+    ├── <a href="#frontend">Indicator Match Rule</a>
+    │   ├── Create Rule UI (Define Step)
+    │   ├── Create Rule UI (About Step)
+    │   ├── Create Rule UI (Schedule Step)
+    │   └── Rule Details UI
+    ├── <a href="#alert-details-flyout">Alert Details Flyout</a>
+    │   ├── Overview tab
+    │   └── Threat Intel tab
+    ├── <a href="#threat-intelligence-integrations">Threat Intelligence Integrations</a>
+    ├── <a href="#threat-intelligence-card">Threat Intelligence Card</a>
+    ├── <a href="#cti-dashboards">CTI dashboards</a>
+    ├── <a href="#cti-row-renderer">CTI Row Renderer</a>
+    ├── <a href="#cti-timeline-template">CTI Timeline template</a>
+    └── <a href="#cti-alerts-table-filter">CTI Alerts Table filter</a>
+
+    Development Setup
+    ├── <a href="#setting-up-fleet-threat-integrations">Setting up Fleet threat integrations</a>
+    ├── <a href="#setting-up-filebeat-threatintel-integrations">Setting up filebeat threatintel integrations</a>
+    ├── <a href="#running-security-solution-api-integration-tests">Running Security Solution API Integration tests</a>
+    ├── <a href="#running-security-solution-jest-tests">Running Security Solution jest tests</a>
+    ├── <a href="#running-security-solution-cypress-tests">Running Security Solution cypress tests</a>
+    └── <a href="#useful-security_solution-scripts">Useful security_solution scripts</a>
+
+    performance
+    ├── <a href="#indicator-match-rule-troubleshooting">Indicator Match Rule troubleshooting</a>
+    │   ├── Reduce the number of indicators
+    │   └── Reduce the number of source documents
+    ├── <a href="#benchmarking-with-kbn-alert-load">benchmarking with kbn-alert-load</a>
+    ├── <a href="#indicator-match-rule">Rule Execution Timeline with APM</a>
+    ├── <a href="#indicator-match-rule">Previous SDHs related to Indicator Match Rules</a>
+    └── <a href="#indicator-match-rule">Performance Epic</a>
+
+    manual regression suites
+    ├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
+    ├── <a href="#indicator-match-rule">Create an investigation time enrichment</a>
+    ├── <a href="#indicator-match-rule">Populate the CTI card</a>
+    ├── <a href="#indicator-match-rule">View CTI dashboards</a>
+    ├── <a href="#indicator-match-rule">View the CTI row renderer</a>
+    └── <a href="#indicator-match-rule">Use the CTI timeline template</a>
+
+    team
+    ├── <a href="#indicator-match-rule">Contributors</a>
+    └── <a href="#indicator-match-rule">CTI sync / CTI area sync agenda documents & recordings</a>
+                </pre>
+            </nav>
+        </div>
+    </div>
+    <div class="content container">
+        <article class="post">
 
   <header class="post-header">
     <h1 class="post-title">Theme Styles</h1>
@@ -382,6 +394,6 @@ The <u>u element</u> example</p>
 
 </article>
 
-</div>
-</body>
-</html>
+    </div>
+    </body>
+    </html>

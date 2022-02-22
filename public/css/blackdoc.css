@@ -47,10 +47,12 @@ h6 {
 }
 
 h1 {
+  padding-top: 60px;
 color: rgb(225,225,225);
 }
 
 h2 {
+  padding-top: 60px;
 color: #ff8a65;
 }
 
@@ -109,7 +111,7 @@ b {
 /* Code */
 
 code {
-  color: #993030;
+  color: #ff8a65;
   white-space: pre-wrap;
   background-color: #222;
 }
@@ -279,7 +281,7 @@ a.sidebar-nav-item:focus {
 
 @media (min-width: 48em) {
   .content {
-    max-width: 95%;
+    max-width: 50%;
     margin-left: 650px;
     margin-right: 0rem;
   }
@@ -298,6 +300,18 @@ a.sidebar-nav-item:focus {
  * Each post is wrapped in `.post` and is used on default and post layouts. Each
  * page is wrapped in `.page` and is only used on the page layout.
  */
+
+td {
+  background: rgb(30,30,30) !important;
+}
+
+a {
+  color: #ff8a65;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 
 /* Blog post or page title */
 .page-title,
