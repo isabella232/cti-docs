@@ -107,9 +107,7 @@
     │   ├── Reduce the number of indicators
     │   └── Reduce the number of source documents
     ├── <a href="#benchmarking-with-kbn-alert-load">benchmarking with kbn-alert-load</a>
-    ├── <a href="#indicator-match-rule">Rule Execution Timeline with APM</a>
-    ├── <a href="#indicator-match-rule">Previous SDHs related to Indicator Match Rules</a>
-    └── <a href="#indicator-match-rule">Performance Epic</a>
+    └── <a href="#rule-execution-timeline-with-apm">Rule Execution Timeline with APM</a>
 
     manual regression suites
     ├── <a href="#indicator-match-rule">Create an alert from an indicator match rule</a>
@@ -356,7 +354,7 @@ With investigation time enrichments, enrichments are done after the alert has be
   </tbody>
 </table>
 
-<h4 id="limitations">Limitations</h4>
+<h3 id="limitations">Limitations</h3>
 
 <h5 id="limited-number-of-alerts-can-be-previewed-max_signals-constraint">Limited number of alerts can be previewed (max_signals constraint)</h5>
 <p>Detection engine uses a concept called max_signals in general, which means that a single rule execution can only return up to a 100 alerts, and subsequent missing alerts would be picked up with the gap-detection strategy with the next rule execution. However, there is no gap detection strategy with the indicator match rule preview implementation as the rule execution is triggered only once, with the parameters listed above. Therefore indicator match rule can show a preview only up to a 100 alerts in a single preview.</p>
@@ -648,14 +646,85 @@ alias bru='git fetch upstream &amp;&amp; git pull -r upstream main &amp;&amp; gi
 <p>Similar to the above, narrowing the query (rule parameter: query) of your source indices may also improve performance. If, as above, your mapping includes source.port -&gt; threat.indicator.port, defining a query of source_port: * can help ensure that irrelevant documents are not included in the search.</p>
 
 <h2 id="benchmarking-with-kbn-alert-load">Benchmarking with kbn-alert-load</h2>
-<p><a href="https://github.com/elastic/kbn-alert-load">kbn-alert-load</a> is a library for load testing the alerting framework. It is also useful for establishing performance benchmarks for the Indicator Match rule.</p>
+<p><a href="https://github.com/elastic/kbn-alert-load">kbn-alert-load</a> is a library for load testing the alerting framework. It is also useful for establishing performance benchmarks for the Indicator Match rule. 
+Multiple test cases have been created for measuring the indicator match rule performance.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>rule count</th>
+      <th>rule interval</th>
+      <th>indicator count</th>
+      <th>event count per minute</th>
+      <th>matched field count</th>
+      <th>runtime</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Case 1</td>
+      <td>5</td>
+      <td>1m</td>
+      <td>10k</td>
+      <td>100</td>
+      <td>1</td>
+      <td>4m</td>
+    </tr>
+    <tr>
+      <td>Case 2</td>
+      <td>15</td>
+      <td>1m</td>
+      <td>10k</td>
+      <td>100</td>
+      <td>1</td>
+      <td>4m</td>
+    </tr>
+    <tr>
+      <td>Case 3</td>
+      <td>5</td>
+      <td>1m</td>
+      <td>1k</td>
+      <td>4k</td>
+      <td>1</td>
+      <td>4m</td>
+    </tr>
+    <tr>
+      <td>Case 4</td>
+      <td>5</td>
+      <td>1m</td>
+      <td>100k</td>
+      <td>100</td>
+      <td>3</td>
+      <td>4m</td>
+    </tr>
+    <tr>
+      <td>Case 5</td>
+      <td>10</td>
+      <td>1m</td>
+      <td>250k</td>
+      <td>100</td>
+      <td>1</td>
+      <td>2m</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following are the results comparing the 8.0 and 8.1 branches to one another according to the cases outlined above.</p>
+
+<p><img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/benchmark.png" /></p>
+
+<h2 id="rule-execution-timeline-with-apm">Rule execution timeline with APM</h2>
+<p>APM is helpful for monitoring the CPU and memory usage while the Indicator Match rules are running, and it provides an important supporting metric to results obtained by kbn-alert-load.</p>
+
+<p>Individual requests can also be observed with APM. The following is the difference between the execution time of an individual query made to the threat index to obtain indicators.</p>
+
+<p><img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/apm.png" /></p>
 
   
   <h1 id="manual-regression-suites">manual regression suites</h1>
 
-<ul>
-  <li>in progress -</li>
-</ul>
+<p>in progress</p>
 
   
 </div>

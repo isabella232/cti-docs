@@ -128,7 +128,7 @@ Since the rule preview is placed at the very beginning of the UI (define step), 
 |`threat_indicator_path`|`threat.indicator`|
 |Advanced Settings| - |
 
-#### Limitations
+### Limitations
 
 ##### Limited number of alerts can be previewed (max_signals constraint)
 Detection engine uses a concept called max_signals in general, which means that a single rule execution can only return up to a 100 alerts, and subsequent missing alerts would be picked up with the gap-detection strategy with the next rule execution. However, there is no gap detection strategy with the indicator match rule preview implementation as the rule execution is triggered only once, with the parameters listed above. Therefore indicator match rule can show a preview only up to a 100 alerts in a single preview.

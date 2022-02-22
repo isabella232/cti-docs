@@ -24,3 +24,23 @@ Similar to the above, narrowing the query (rule parameter: query) of your source
 
 ## Benchmarking with kbn-alert-load
 [kbn-alert-load](https://github.com/elastic/kbn-alert-load) is a library for load testing the alerting framework. It is also useful for establishing performance benchmarks for the Indicator Match rule. 
+Multiple test cases have been created for measuring the indicator match rule performance. 
+
+|name|rule count|rule interval|indicator count|event count per minute|matched field count|runtime|
+|---|---|---|---|---|---|---|
+|Case 1|5|1m|10k|100|1|4m|
+|Case 2|15|1m|10k|100|1|4m|
+|Case 3|5|1m|1k|4k|1|4m|
+|Case 4|5|1m|100k|100|3|4m|
+|Case 5|10|1m|250k|100|1|2m|
+
+The following are the results comparing the 8.0 and 8.1 branches to one another according to the cases outlined above.
+
+<img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/benchmark.png"/>
+
+## Rule execution timeline with APM
+APM is helpful for monitoring the CPU and memory usage while the Indicator Match rules are running, and it provides an important supporting metric to results obtained by kbn-alert-load.
+
+Individual requests can also be observed with APM. The following is the difference between the execution time of an individual query made to the threat index to obtain indicators. 
+
+<img style="max-width:600px;" src="https://ecezalp.github.io/cti-docs-demo/public/images/apm.png"/>
