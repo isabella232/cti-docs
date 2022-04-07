@@ -13,7 +13,7 @@ To update the CTI docs, please use the following steps:
 1. clone this repo
 2. run `bundle install`
 3. add markdown files in the `_documents` directory
-4. update index.html to update the sidebar links
+4. update `index.html` to update the sidebar links
 5. delete `docs` and `_site` directories if they exist   
 5. run `bundle exec jekyll build` to build
 6. run `bundle exec jekyll serve` to serve
