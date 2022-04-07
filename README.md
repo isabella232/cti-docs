@@ -22,12 +22,13 @@ To update the CTI docs, please use the following steps:
 
 ## Reuse the documentation template for another project
 
-1. clone this repo and update the remote tracking branch to your own empty repo 
-2. delete all files in the `_documents` directory and add some of your own  
-3. Update the project title and the sidebar links in the `index.html`
-4. delete `docs` and `_site` directories if they exist
-5. run `bundle exec jekyll build` to build
-6. run `bundle exec jekyll serve` to serve
-7. once you are ready, rename the `_site` directory to `docs`, and push to `main`
-8. go to the Pages section of your github project settings, and choose `docs` from the blog source dropdown
-9. you can find the link to your blog on the same github settings page
+1. clone this repo and update the remote tracking branch to your own empty repo
+2. run `bundle install`
+3. delete all files in the `_documents` directory and add some of your own  
+4. Update the project title and the sidebar links in the `index.html`
+5. delete `docs` and `_site` directories if they exist
+6. run `bundle exec jekyll build` to build
+7. run `bundle exec jekyll serve` to serve
+8. once you are ready, rename the `_site` directory to `docs`, and push to `main`
+9. go to the Pages section of your github project settings, and choose `docs` from the blog source dropdown
+10. you can find the link to your blog on the same github settings page
